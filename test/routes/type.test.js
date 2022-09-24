@@ -14,10 +14,23 @@ const mockDB = {
 
 const app = makeApp(mockDB);
 
+describe("GET /api/types", () => {
+  const endpoint = "/api/types";
+
+  describe("GET request sent", () => {
+
+    test("should respond with 200 status code", async () => {
+      const response = await request(app).get(endpoint);
+      expect(response.statusCode).toBe(200);
+    })
+  })
+  
+})
+
 describe("GET /api/types/all", () => {
 
   const endpoint = "/api/types/all"
-
+  
   beforeEach(() => {
     getAllTypes.mockReset();
     getAllTypes.mockResolvedValue(
@@ -31,6 +44,10 @@ describe("GET /api/types/all", () => {
     )
   })
 
+  afterAll(() => {
+    jest.resetAllMocks();
+  })
+
   describe("GET request sent", () => {
     test("should receive a json object", async () => {
       const response = await request(app).get(endpoint);
@@ -42,13 +59,20 @@ describe("GET /api/types/all", () => {
       expect(response.statusCode).toBe(200);
     })
 
+    test("should respond with 500 status code when error is encountered", async () => {
+      getAllTypes.mockImplementation(() => {
+        throw new Error();
+      })
+      const response = await request(app).get(endpoint);
+      expect(response.statusCode).toBe(500);
+    })
+
     test("should receive a json object that contains pokemon types", async () => {
       const types = [
         "Fire", "Water", "Grass"
       ];
 
       const response = await request(app).get(endpoint);
-      console.log(response.body);
       for (const type of types) {
         expect(response.body.some(item => item.type === type)).toBe(true);
       }

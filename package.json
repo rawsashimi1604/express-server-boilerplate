@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --verbose",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --verbose --coverage",
     "start": "node src/server.js",
     "beautify": "npx prettier --write .",
     "dev": "nodemon src/server.js"
@@ -32,5 +32,8 @@
     "nodemon": "^2.0.19",
     "prettier": "2.7.1",
     "supertest": "^6.2.4"
+  },
+  "jest": {
+    "transform": {}
   }
 }
