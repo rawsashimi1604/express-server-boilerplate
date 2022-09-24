@@ -1,7 +1,7 @@
-import relations from "./relations/index.js"
+import relations from "./relations/index.js";
 
 const PSQLDatabase = {
-  relations
-}
+  relations,
+};
 
 export default PSQLDatabase;

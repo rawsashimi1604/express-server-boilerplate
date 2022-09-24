@@ -1,6 +1,6 @@
 import makeApp from "./app.js";
 import setupEnv from "./lib/setupEnv.js";
-import databases from "./db/index.js"
+import databases from "./db/index.js";
 
 // Set up dotenv environment from .env file.
 setupEnv("../.env");
@@ -9,7 +9,7 @@ setupEnv("../.env");
 const database = databases.PSQLDatabase;
 
 // Inject database into express.js app... (Dependency Injection)
-const app = makeApp(database)
+const app = makeApp(database);
 
 // Decide which port is in use... (production = process.env.PORT, local = 3000)
 const PORT = process.env.PORT || 3000;

@@ -4,4 +4,4 @@ const type = TypeRelation;
 
 export default {
   type,
-}
+};

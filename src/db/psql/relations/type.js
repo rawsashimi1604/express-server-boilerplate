@@ -10,4 +10,4 @@ function getAllTypes() {
   }
 }
 
-export default { getAllTypes, };
+export default { getAllTypes };

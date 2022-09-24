@@ -8,7 +8,6 @@ export default function (database) {
 
   // Middleware that is specific to Type Router..
   router.use((req, res, next) => {
-
     // Inject database to controllers (Dependency Injection)
     res.locals.database = database;
 
@@ -22,5 +21,3 @@ export default function (database) {
 
   return router;
 }
-
-

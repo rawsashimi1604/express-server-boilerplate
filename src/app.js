@@ -50,6 +50,3 @@ export default function (database) {
 
   return app;
 }
-
-
-
