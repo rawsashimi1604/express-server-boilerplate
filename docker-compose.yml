@@ -10,7 +10,7 @@ services:
       - 8085:8085
 
     volumes:
-      - ./src:/app/src
+      - ./:/app
 
     environment:
       - BACKEND_PORT=${BACKEND_PORT}
@@ -21,8 +21,7 @@ services:
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_DB=${POSTGRES_DB}
       - FRONTEND_APP_URL=${FRONTEND_APP_URL}
-
-    command: npm run dev
+      
     depends_on:
       - db
 
