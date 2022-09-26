@@ -2,6 +2,11 @@ import request from "supertest";
 import makeApp from "../src/app.js";
 import { jest } from "@jest/globals";
 
+// Stop logging
+beforeAll(() => {
+  global.console = { log: jest.fn() }
+})
+
 const app = makeApp({});
 
 describe("GET route not found", () => {
