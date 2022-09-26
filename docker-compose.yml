@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  node-api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+
+    volumes:
+      - ./src:/app/src
+
+    command: npm run dev

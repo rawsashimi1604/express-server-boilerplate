@@ -1,1 +1,0 @@
-CREATE DATABASE poke_tcg_db;

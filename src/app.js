@@ -37,11 +37,12 @@ export default function (database) {
 
   // Default Route
   app.get("/", (req, res) => {
-    res.send("Hello world!");
+    res.send("Hello worldd!");
   });
 
   //
   app.get("*", (req, res) => {
+    console.log("test");
     res.status(404).send("Route not found");
   });
 
