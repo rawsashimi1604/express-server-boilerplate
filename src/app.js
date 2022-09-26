@@ -1,11 +1,13 @@
 import express from "express";
+import setupEnv from "./lib/setupEnv.js";
+
+// Router imports
+import makeVehicleRouter from "./routes/vehicle.js";
+
+// Middleware imports
 import morgan from "morgan";
 import cors from "cors";
 import bodyParser from "body-parser";
-import setupEnv from "./lib/setupEnv.js";
-
-import makeTypeRouter from "./routes/type.js";
-
 import ErrorMiddleware from "./middleware/error.js";
 
 export default function (database) {
@@ -24,7 +26,7 @@ export default function (database) {
   const corsOptions = {
     origin:
       process.env.NODE_ENV === "production"
-        ? process.env.FRONTEND_APP_URL
+        ? "http://localhost:" + process.env.FRONTEND_PORT
         : process.env.FRONTEND_APP_URL_LOCAL,
     credentials: true, // access-control-allow-credentials:true
     optionSuccessStatus: 200,
@@ -33,7 +35,7 @@ export default function (database) {
   app.use(cors(corsOptions));
 
   // Routes
-  app.use("/api/types", makeTypeRouter(database));
+  app.use("/api/vehicles", makeVehicleRouter(database));
 
   // Default Route
   app.get("/", (req, res) => {
@@ -42,7 +44,6 @@ export default function (database) {
 
   //
   app.get("*", (req, res) => {
-    console.log("test");
     res.status(404).send("Route not found");
   });
 

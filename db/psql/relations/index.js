@@ -1,7 +1,7 @@
-import TypeRelation from "./type.js";
+import VehicleRelation from "./vehicle.js";
 
-const type = TypeRelation;
+const vehicle = VehicleRelation;
 
 export default {
-  type,
+  vehicle,
 };

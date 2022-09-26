@@ -1,15 +1,15 @@
 function handleIndex(req, res) {
-  res.send("Type route...");
+  res.send("Vehicle route...");
 }
 
-async function handleAllTypes(req, res) {
+async function handleAllVehicles(req, res) {
   // Database object passed from middleware...
   const database = res.locals.database;
-  const queryRes = await database.relations.type.getAllTypes();
+  const queryRes = await database.relations.vehicle.getAllVehicles();
   res.status(200).send(queryRes.rows);
 }
 
 export default {
   handleIndex,
-  handleAllTypes,
+  handleAllVehicles,
 };

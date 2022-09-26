@@ -1,8 +1,8 @@
 import db from "../config.js";
 
-function getAllTypes() {
+function getAllVehicles() {
   try {
-    const query = "SELECT * FROM type";
+    const query = "SELECT * FROM vehicle";
     return db.query(query);
   } catch (err) {
     console.log(err);
@@ -10,4 +10,4 @@ function getAllTypes() {
   }
 }
 
-export default { getAllTypes };
+export default { getAllVehicles };
