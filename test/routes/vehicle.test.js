@@ -2,20 +2,20 @@ import request from "supertest";
 import makeApp from "../../src/app.js";
 import { jest } from "@jest/globals";
 
-const getAllTypes = jest.fn();
+const getAllVehicles = jest.fn();
 
 const mockDB = {
   relations: {
-    type: {
-      getAllTypes,
+    vehicle: {
+      getAllVehicles,
     },
   },
 };
 
 const app = makeApp(mockDB);
 
-describe("GET /api/types", () => {
-  const endpoint = "/api/types";
+describe("GET /api/vehicles", () => {
+  const endpoint = "/api/vehicles";
 
   describe("GET request sent", () => {
     test("should respond with 200 status code", async () => {
@@ -25,16 +25,16 @@ describe("GET /api/types", () => {
   });
 });
 
-describe("GET /api/types/all", () => {
-  const endpoint = "/api/types/all";
+describe("GET /api/vehicles/all", () => {
+  const endpoint = "/api/vehicles/all";
 
   beforeEach(() => {
-    getAllTypes.mockReset();
-    getAllTypes.mockResolvedValue({
+    getAllVehicles.mockReset();
+    getAllVehicles.mockResolvedValue({
       rows: [
-        { type_id: 1, type: "Fire" },
-        { type_id: 2, type: "Grass" },
-        { type_id: 3, type: "Water" },
+        { id: 1, vehicle: "Honda" },
+        { id: 2, vehicle: "Mitsubishi" },
+        { id: 3, vehicle: "BMW" },
       ],
     });
   });
@@ -57,19 +57,19 @@ describe("GET /api/types/all", () => {
     });
 
     test("should respond with 500 status code when error is encountered", async () => {
-      getAllTypes.mockImplementation(() => {
+      getAllVehicles.mockImplementation(() => {
         throw new Error();
       });
       const response = await request(app).get(endpoint);
       expect(response.statusCode).toBe(500);
     });
 
-    test("should receive a json object that contains pokemon types", async () => {
-      const types = ["Fire", "Water", "Grass"];
+    test("should receive a json object that contains vehicles", async () => {
+      const vehicles = ["Honda", "Mitsubishi", "BMW"];
 
       const response = await request(app).get(endpoint);
-      for (const type of types) {
-        expect(response.body.some((item) => item.type === type)).toBe(true);
+      for (const vehicle of vehicles) {
+        expect(response.body.some((item) => item.vehicle === vehicle)).toBe(true);
       }
     });
   });
