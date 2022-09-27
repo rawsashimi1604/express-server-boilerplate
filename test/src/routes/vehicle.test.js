@@ -9,12 +9,14 @@ beforeAll(() => {
 
 const getAllVehicles = jest.fn();
 const addVehicle = jest.fn();
+const deleteVehicleByID = jest.fn();
 
 const mockDB = {
   relations: {
     vehicle: {
       getAllVehicles,
       addVehicle,
+      deleteVehicleByID,
     },
   },
 };
@@ -141,6 +143,61 @@ describe("POST /api/vehicles", () => {
       };
       const response = await request(app).post(endpoint).send(validObject);
       expect(response.statusCode).toBe(500);
+    });
+  });
+});
+
+describe("DELETE /api/vehicles/:id", () => {
+  let endpoint = "/api/vehicles/1";
+
+  beforeEach(() => {
+    deleteVehicleByID.mockReset();
+    deleteVehicleByID.mockResolvedValue({
+      rows: [{ id: 1, name: "Honda" }],
+      rowCount: 1,
+    });
+  });
+
+  afterAll(() => {
+    jest.resetAllMocks();
+  });
+
+  describe("DELETE request sent", () => {
+    // should respond with 200 if delete success
+    test("should respond with 200 if delete success", async () => {
+      const response = await request(app).delete(endpoint);
+      expect(response.statusCode).toBe(200);
+    });
+
+    // should respond with json object if delete success
+    test("should receive a json object", async () => {
+      const response = await request(app).delete(endpoint);
+      expect(response.headers["content-type"]).toEqual(
+        expect.stringContaining("json")
+      );
+    });
+
+    // should respond with 500 if server error
+    test("should respond with 500 status code when error is encountered", async () => {
+      deleteVehicleByID.mockImplementation(() => {
+        throw new Error();
+      });
+      const response = await request(app).delete(endpoint);
+      expect(response.statusCode).toBe(500);
+    });
+
+    // should respond with 204 if delete failed
+    test("should respond with 204 if delete failed", async () => {
+      deleteVehicleByID.mockResolvedValue({ rowCount: 0 });
+      const response = await request(app).delete(endpoint);
+      expect(response.statusCode).toBe(204);
+    });
+
+    // should respond with 400 if invalid id
+    test("should respond with 400 if invalid id", async () => {
+      endpoint = "/api/vehicles/randomString";
+      const response = await request(app).delete(endpoint);
+      expect(response.statusCode).toBe(400);
     });
   });
 });

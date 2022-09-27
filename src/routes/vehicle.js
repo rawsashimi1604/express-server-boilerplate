@@ -19,6 +19,10 @@ export default function (database) {
   router.get("/", VehicleController.handleIndex);
   router.get("/all", asyncErrorHandler(VehicleController.handleAllVehicles));
   router.post("/", asyncErrorHandler(VehicleController.handleAddVehicle));
+  router.delete(
+    "/:id",
+    asyncErrorHandler(VehicleController.handleDeleteVehicle)
+  );
 
   return router;
 }
