@@ -63,6 +63,10 @@ docker volume ls
 - Run the command `npm run docker:dev` to start the docker container.
 - You should see this if the container was run correctly.
 
+```
+Server has successfully started on port: 8085
+```
+
 ### Prettier, code beautification
 To achieve a similar standard of coding standards throughout the codebase, run `npm run beautify` before every code commit.
 ### Test Driven Development (TDD)
