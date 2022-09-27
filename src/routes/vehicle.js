@@ -1,7 +1,7 @@
 import express from "express";
 
 import VehicleController from "../controller/vehicle.js";
-import asyncErrorHandler from "../lib/asyncErrorHandler.js";
+import asyncErrorHandler from "../lib/utils/asyncErrorHandler.js";
 
 export default function (database) {
   const router = express.Router();
@@ -18,6 +18,7 @@ export default function (database) {
   // Routes
   router.get("/", VehicleController.handleIndex);
   router.get("/all", asyncErrorHandler(VehicleController.handleAllVehicles));
+  router.post("/", asyncErrorHandler(VehicleController.handleAddVehicle));
 
   return router;
 }

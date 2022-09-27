@@ -10,4 +10,15 @@ function getAllVehicles() {
   }
 }
 
-export default { getAllVehicles };
+function addVehicle(vehicle) {
+  try {
+    const query = "INSERT INTO vehicle(name) VALUES ($1) RETURNING *";
+    const params = [vehicle.name];
+    return db.query(query, params);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+export default { getAllVehicles, addVehicle };

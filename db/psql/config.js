@@ -1,5 +1,5 @@
 import pg from "pg";
-import setupEnv from "../../src/lib/setupEnv.js";
+import setupEnv from "../../src/lib/utils/setupEnv.js";
 
 // Set up dotenv environment from .env file.
 setupEnv("../.env");

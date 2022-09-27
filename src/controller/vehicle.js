@@ -1,3 +1,5 @@
+import validateAddVehicle from "../lib/vehicle/validateAddVehicle.js";
+
 function handleIndex(req, res) {
   res.send("Vehicle route...");
 }
@@ -5,11 +7,26 @@ function handleIndex(req, res) {
 async function handleAllVehicles(req, res) {
   // Database object passed from middleware...
   const database = res.locals.database;
-  const queryRes = await database.relations.vehicle.getAllVehicles();
-  res.status(200).send(queryRes.rows);
+  const vehicles = await database.relations.vehicle.getAllVehicles();
+  res.status(200).send(vehicles.rows);
+}
+
+async function handleAddVehicle(req, res) {
+  const vehicle = req.body;
+
+  // If invalid json object, send 400 error...
+  if (!validateAddVehicle(vehicle)) {
+    res.status(400).send("Invaild vehicle object sent.");
+    return;
+  }
+
+  const database = res.locals.database;
+  const addedVehicle = await database.relations.vehicle.addVehicle(vehicle);
+  res.status(200).send(addedVehicle.rows[0]);
 }
 
 export default {
   handleIndex,
   handleAllVehicles,
+  handleAddVehicle,
 };

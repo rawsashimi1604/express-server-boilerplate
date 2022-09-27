@@ -1,5 +1,5 @@
 import express from "express";
-import setupEnv from "./lib/setupEnv.js";
+import setupEnv from "./lib/utils/setupEnv.js";
 
 // Router imports
 import makeVehicleRouter from "./routes/vehicle.js";
@@ -20,7 +20,7 @@ export default function (database) {
   app.use(morgan("combined"));
 
   // Enable parsing of JSON in req.body
-  app.use(bodyParser.json());
+  app.use(express.json());
 
   // Enable CORS (Cross Origin Resource Sharing w/ frontend app)
   const corsOptions = {
